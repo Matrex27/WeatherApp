@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             //Recuperar datos desde la api
             var latitude = getCountryLat(countrySelected)
             var longitude = getCountryLon(countrySelected)
-            
+
             mainViewModel.viewModelScope.launch {
                 mainViewModel.getWeather(latitude,longitude ,"06389e8488fb77714ed2a4f8c818afab", "en")
             }
