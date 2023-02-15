@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.common.entities.WeatherEntity
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class MainViewModel : ViewModel() {
 
@@ -34,8 +35,16 @@ class MainViewModel : ViewModel() {
                 var resultServer = repository.getWeatherForecast(lat, lon, appid, lang)
                 result.value = resultServer
 
-            }catch (e: Exception){
-                e.printStackTrace()
+            }catch (e: HttpException){
+                (e as? HttpException)?.let {
+                    when(it.code()){
+                        400 -> Log.i("Error:", "Error 400 Bad Request")
+
+                        else -> Log.i("Error:", "Error desconocido")
+                    }
+
+                }
+
             }
         }
 
